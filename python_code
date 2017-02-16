@@ -1,0 +1,30 @@
+
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+map = Basemap(projection='merc', resolution='l', llcrnrlon=-90, llcrnrlat=-80, urcrnrlon=130, urcrnrlat=-10)
+
+map.drawcoastlines(linewidth=0.5)
+map.drawcountries(linewidth=0.5)
+map.fillcontinents(alpha=0.5)
+map.drawmapboundary()
+map.drawmeridians(np.arange(0, 360, 30), labels=[False, False, False, True], linewidth=0.1)
+map.drawparallels(np.arange(-90, 90, 30), labels=[False, True, False, False], linewidth=0.1)
+
+map.drawlsmask(land_color='c', ocean_color='w', lsmask=None, lsmask_lons=None, lsmask_lats=None, lakes=True, resolution='l', grid=5)
+map.drawrivers(linewidth=0.5, linestyle='solid', color='k', antialiased=1, ax=None, zorder=None)
+plt.title(u'Dsitribuación de Aptenodytes forsteri') 
+
+specie = pd.read_table('pinguino.csv', delimiter=',')
+
+
+lon, lat = map(list(specie['longitude']), list(specie['latitude']))
+
+map.plot(lon, lat, 'bo', markersize=7, markeredgecolor='none')
+plt.savefig('dist_pinguino4.pdf')
+
+plt.show()git add archivo
+git commit -m "comentario"
+git push
